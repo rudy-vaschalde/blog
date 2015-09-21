@@ -1,27 +1,18 @@
-<h1><%= @article.title %></h1>
- 
+<h1><%= @article.title %> <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-warning" %></h1>
+
 <p>
-  <strong>Text:</strong>
   <%= @article.text %>
 </p>
+<div class="col-md-4">
+  <h4>Comments</h4>
+  <%== render @article.comments %>
+</div>
+<div class="col-md-4">
+  <h4>Add a comment:</h4>
+  <%= bootstrap_form_for([@article, @article.comments.build]) do |f| %>
+  <%= f.text_field :commenter %>
+  <%= f.text_area :body %>
 
-<h2>Comments</h2>
-<%== render @article.comments %>
-
-<h2>Add a comment:</h2>
-<%= form_for([@article, @article.comments.build]) do |f| %>
-  <p>
-    <%= f.label :commenter %><br>
-    <%= f.text_field :commenter %>
-  </p>
-  <p>
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </p>
-  <p>
-    <%= f.submit %>
-  </p>
-<% end %>
- 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'My Blog', controller: 'articles' %>
+  <%= f.submit %>
+  <% end %>
+</div>
